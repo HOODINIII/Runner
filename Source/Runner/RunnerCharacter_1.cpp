@@ -33,7 +33,7 @@ ARunnerCharacter_1::ARunnerCharacter_1()
 	GetCharacterMovement()->MaxFlySpeed = 500.0f;
 
 	temPos = GetActorLocation();
-	zPosition = temPos.Z + 300.0f;
+	zPosition = temPos.Z + 250.0f;
 
 
 }
@@ -50,7 +50,10 @@ void ARunnerCharacter_1::BeginPlay()
 void ARunnerCharacter_1::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	temPos = GetActorLocation();
+	temPos.X -= 850.0f;
+	temPos.Z = zPosition;
+	SideViewCamera->SetWorldLocation(temPos);
 }
 
 // Called to bind functionality to input
@@ -61,17 +64,16 @@ void ARunnerCharacter_1::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 
-	PlayerInputComponent->BindAxis("MoveRight", this, &ARunnerCharacter_1::MoveRight);
+	PlayerInputComponent->BindAxis("Move Right / Left", this, &ARunnerCharacter_1::MoveRight);
 
 
 }
 
-void ARunnerCharacter_1::MoveRight(float)
+void ARunnerCharacter_1::MoveRight(float value)
 {
 	if (CanMove)
-	{
-		AddMovementInput(FVector(0.0f, 1.0f, 0.0f));
-	}
+
+		AddMovementInput(FVector(0.0f, 1.0f, 0.0f), value);
 }
 
 void ARunnerCharacter_1::RestartLevel()

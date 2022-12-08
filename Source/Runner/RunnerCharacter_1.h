@@ -30,7 +30,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 protected:
-	void MoveRight(float);
+	void MoveRight(float value);
 
 public:
 	class UCameraComponent* GetSideViewCameraComponent() const
