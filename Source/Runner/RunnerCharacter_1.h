@@ -11,6 +11,9 @@ class RUNNER_API ARunnerCharacter_1 : public ACharacter
 {
 	GENERATED_BODY()
 
+		UPROPERTY(VisibleAnywhere)
+		class UCameraComponent* SideViewCamera; 
+
 public:
 	// Sets default values for this character's properties
 	ARunnerCharacter_1();
@@ -26,4 +29,24 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+protected:
+	void MoveRight(float);
+
+public:
+	class UCameraComponent* GetSideViewCameraComponent() const
+	{
+		return SideViewCamera;
+	}
+
+
+	void RestartLevel();
+
+	UFUNCTION()
+		void OnverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+private:
+	float zPosition;
+	FVector temPos = FVector();
+
+	bool CanMove;
 };
